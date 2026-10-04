@@ -1,0 +1,54 @@
+{
+  "Enabled": true,
+  "DebugLog": false,
+  "HeartbeatSeconds": 60,
+  "ForceConstantFog": 0.0,
+
+  "MaxFog": 0.075,
+  "PeakFogMin": 0.015,
+  "PeakFogMax": 0.075,
+  "PeakSkew": 1.3,
+
+  "RampUpHoursMin": 1.0,
+  "RampUpHoursMax": 2.0,
+  "HoldHoursMin": 2.0,
+  "HoldHoursMax": 6.0,
+  "RampDownHoursMin": 1.0,
+  "RampDownHoursMax": 2.0,
+  "MinGapHours": 4.0,
+
+  "FogDayStartHour": 15.0,
+  "MaxEventsPerDay": 2,
+  "BaseChancePerHour": 0.04,
+  "MaxChancePerHour": 0.3,
+  "PointSpacingMinutes": 15.0,
+
+  "UseBurnOff": true,
+  "DayBurnOff": 0.35,
+  "WindBurnOff": 0.4,
+
+  "UseTimeOfDay": true,
+  "DawnMultiplier": 2.5,
+  "NightMultiplier": 2.0,
+  "DuskMultiplier": 1.3,
+  "DayMultiplier": 0.25,
+
+  "UseWind": true,
+  "CalmWindMultiplier": 1.6,
+  "WindyMultiplier": 0.3,
+  "CalmWindBelow": 1.0,
+  "WindyAbove": 3.0,
+
+  "UseRain": true,
+  "RainMultiplier": 1.8,
+
+  "UseCold": true,
+  "ColdMultiplier": 1.3,
+  "ColdBelowTemp": 5.0,
+
+  "UseSeason": true,
+  "SeasonSummerMultiplier": 0.6,
+  "SeasonAutumnMultiplier": 1.6,
+  "SeasonWinterMultiplier": 1.3,
+  "SeasonSpringMultiplier": 1.1
+}

@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>DynamicFog</AssemblyName>
+    <RootNamespace>DynamicFog</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <Version>1.0.0</Version>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Set to false (dotnet build -p:DeployToServer=false) to skip the copy into the SPT install -->
+    <DeployToServer Condition="'$(DeployToServer)' == ''">true</DeployToServer>
+    <ServerModsDir>F:\SPT4.1\SPT_Runtime\user\mods</ServerModsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SPTarkov.Common" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.DI" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Server.Core" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Reflection" Version="4.1.2" />
+  </ItemGroup>
+
+  <!-- config.json ships next to the dll; ModHelper.GetAbsolutePathToModFolder finds it there -->
+  <ItemGroup>
+    <None Update="config.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- Auto-deploy: copy just our dll (+ config on first install) into the server's mods folder.
+       Framework/SPT dlls are provided by the server, so we never ship them.
+       Skipped silently when that folder doesn't exist (e.g. building on another machine). -->
+  <Target Name="DeployToServer" AfterTargets="Build" Condition="'$(DeployToServer)' == 'true' And Exists('$(ServerModsDir)')">
+    <PropertyGroup>
+      <ModDeployDir>$(ServerModsDir)\DynamicFog</ModDeployDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(ModDeployDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDeployDir)" SkipUnchangedFiles="false" />
+    <!-- Don't clobber the user's tuned config on rebuilds -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\config.json" DestinationFolder="$(ModDeployDir)" Condition="!Exists('$(ModDeployDir)\config.json')" />
+    <Message Importance="high" Text="[DynamicFog] deployed to $(ModDeployDir)" />
+  </Target>
+
+</Project>
